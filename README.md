@@ -1,0 +1,3 @@
+# varios
+
+Exemplos prácticos
