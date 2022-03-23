@@ -51,11 +51,23 @@
 	</nav>
 
 
-
+<!-- Trigger container -->
+<div class="container">
+		<div class="row">
+			<div class="col-3 align-self-center">
+				<div class="card card-body">
+					<h2>Bootstrap Modal + jQuery + Ajax + send data</h2>
+					
 	<!-- Button trigger modal -->
 	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalForm">
 		Enviar mensaxe
 	</button>
+
+	</div>
+			</div>
+		</div>
+	</div>
+
 
 	<!-- Modal --
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

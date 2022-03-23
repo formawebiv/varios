@@ -7,31 +7,16 @@
 	<title>ajax modal</title>
 
 	<!-- Latest minified bootstrap css -->
-	<!-- CSS only 
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
--->
-	<!-- jQuery library 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
--->
-	<!-- JavaScript Bundle with Popper
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
- -->
-<!-- Latest minified bootstrap css -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-<!-- Latest minified bootstrap js -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- Latest minified bootstrap js -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-
-	<!-- Button to trigger modal -->
-	<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalForm">
-		Abrir formulario de contato
-	</button>
 
 	<!-- Modal -->
 	<div class="modal fade" id="modalForm" role="dialog">
@@ -60,7 +45,8 @@
 						</div>
 						<div class="form-group">
 							<label for="inputMessage">Mensaxe</label>
-							<textarea class="form-control" id="inputMessage" placeholder="Insire teu mensaxe"></textarea>
+							<textarea class="form-control" id="inputMessage"
+								placeholder="Insire teu mensaxe"></textarea>
 						</div>
 					</form>
 				</div>
@@ -68,19 +54,42 @@
 				<!-- Modal Footer -->
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Pechar</button>
-					<button type="button" class="btn btn-primary submitBtn" onclick="submitContactForm()">ENVIAR</button>
+					<button type="button" class="btn btn-primary submitBtn"
+						onclick="submitContactForm()">ENVIAR</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
+	<!-- Trigger container -->
+	<div class="container">
+		<div class="row">
+			<div class="col-3 align-self-center">
+				<div class="card card-body">
+					<h2>Bootstrap Modal + jQuery + Ajax + Sendmail</h2>
+
+					<!-- Button to trigger modal -->
+					<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalForm">
+						Abrir formulario de contato
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script>
 		function submitContactForm() {
+			// sanitización
 			var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+
+			// recollida de datos. 
+			// se declara unha variable por cada input do DOM 
+			// que recolle os datos do formulario
 			var name = $('#inputName').val();
 			var email = $('#inputEmail').val();
 			var message = $('#inputMessage').val();
+
+			// validacion de datos e estado
 			if (name.trim() == '') {
 				alert('Insire o teu nome.');
 				$('#inputName').focus();
@@ -98,23 +107,40 @@
 				$('#inputMessage').focus();
 				return false;
 			} else {
+				// Queda chamar ao código de envío de correo...
 				$.ajax({
+				// preparamos as cabeceiras para que o axente do cliente
+				// entenda que se trata dun correo electronico
 					type: 'POST',
+
+				// indicamos que arquivo será o encargado 
+				// de enviar finalmente os datos
 					url: 'submit_form.php',
+
+				// datos que se recollen e se envian
 					data: 'contactFrmSubmit=1&name=' + name + '&email=' + email + '&message=' + message,
-					beforeSend: function() {
+				
+					// antes do envío este será o aspecto da modal e o seu contido 
+					beforeSend: function () {
 						$('.submitBtn').attr("disabled", "disabled");
 						$('.modal-body').css('opacity', '.5');
 					},
-					success: function(msg) {
+
+					// se todo transcorre correctamente
+					// se limpan os datos do formulario 
+					// e se emite unha mensaxe de confirmación
+					success: function (msg) {
 						if (msg == 'ok') {
 							$('#inputName').val('');
 							$('#inputEmail').val('');
 							$('#inputMessage').val('');
 							$('.statusMsg').html('<span style="color:green;">Grazas por contactar con nos, nos poremos en contacto axiña nos sexa posible (ansp).</p>');
 						} else {
+						// pero tamén se emitirá unha mensaxe de erro 
+						//se algo non vai ben
 							$('.statusMsg').html('<span style="color:red;">Ocorreu algún erro, tentao de novo por favor.</span>');
 						}
+						// e a modal queda como ao encetar 
 						$('.submitBtn').removeAttr("disabled");
 						$('.modal-body').css('opacity', '');
 					}

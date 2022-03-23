@@ -9,7 +9,7 @@ if (isset($_POST['contactFrmSubmit']) && !empty($_POST['name']) && !empty($_POST
 	/*
      * Send email to admin
      */
-	$to     = 'admin@example.com';
+	$to     = 'info@ambosass.com';
 	$subject = 'Contact Request Submitted';
 
 	$htmlContent = '
@@ -31,7 +31,7 @@ if (isset($_POST['contactFrmSubmit']) && !empty($_POST['name']) && !empty($_POST
 	$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
 	// Additional headers
-	$headers .= 'From: semicolonworld<sender@example.com>' . "\r\n";
+	$headers .= 'From: semicolonworld<nunhes@gmail.com>' . "\r\n";
 
 	// Send email
 	if (mail($to, $subject, $htmlContent, $headers)) {
